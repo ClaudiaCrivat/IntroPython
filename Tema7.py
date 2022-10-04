@@ -20,12 +20,17 @@
 # Creati un obiect de tip Patrat si jucati-va cu metodele lui
 # Creati un obiect de tip Cerc si jucati-va cu metodele lui
 
-from abc import ABC
+from abc import ABC, abstractmethod
 
 class FormaGeometrica(ABC):
+    # pi = 3.14
+    def __init__(self):
+        self.pi = 3.14
 
-    def __init__(self, pi):
-        self.pi = pi
+    @abstractmethod
+    def arie(self):
+        pass
+
 
     def descriere(self):
         print('Cel mai probabil am colturi')
@@ -33,16 +38,20 @@ class FormaGeometrica(ABC):
 
 
 class Patrat(FormaGeometrica):
-    def __init__(self,latura, pi):
-        super().__init__(pi)
+    def __init__(self,latura):
+        super().__init__()
         self.__latura = latura
+        print(f'In initul clasei patrat, pi= {self.pi}')
+
+    def arie(self):
+        return self.__latura**2
 
     @property
     def latura(self):
         return self.__latura
 
 
-    @latura.setter
+    # @latura.setter
     def set_latura(self, new_latura):
         self.__latura = new_latura
 
@@ -58,9 +67,11 @@ class Patrat(FormaGeometrica):
 
 
 class Cerc(FormaGeometrica):
-    def __init__(self, raza, pi):
-        super().__init__(pi)
+    def __init__(self, raza):
+        super().__init__()
         self.__raza = raza
+    def arie(self):
+        return self.pi*(self.__raza**2)
 
     @property
     def raza(self):
@@ -79,19 +90,27 @@ class Cerc(FormaGeometrica):
         self.__raza = None
         print('Am sters raza')
 
-    def descrie(self):
+    def descriere(self):
         print('Eu nu am colturi')
 
-p1 = Patrat(3, 3.14)
+def descriere_interfata(obj):
+    obj.descriere()
+
+p1 = Patrat(3)
 p1.descriere()
+descriere_interfata(p1)
+
 print(f'Latura este {p1.latura}')
-p1.set_latura=5
+print(f'Aria este {p1.arie()}')
+p1.set_latura(5)
 print(f'Noua latura este {p1.get_latura}')
 del p1.del_latura
 
-c = Cerc(5,3.14)
-c.descrie()
+c = Cerc(5)
+c.descriere()
+descriere_interfata(c)
 print(f'Raza este {c.raza}')
+print(f'Aria este {c.arie()}')
 c.set_latura=8
 print(f'Noua raza este {c.get_raza}')
 del c.del_raza
